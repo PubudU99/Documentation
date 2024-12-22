@@ -1,4 +1,4 @@
-## Azure DevOps for the CST process
+# Azure DevOps for the CST process
 
 Ballerina service call the azure pipelines for triggering the CI-CD pipelines for the Customer Specific Tests process.
 
