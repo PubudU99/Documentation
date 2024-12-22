@@ -83,7 +83,7 @@ Those details should be converted as below before send to the ballerina service.
 
 Then UMT backend checks the response of the ballerina service and save the result in the ```release_chunk_cst_build_status``` table.
 
-**How the status update process works**
+**How the status update process works**```release_chunk_cst_build_status_history```
 
 This is implemented to get the CST status of the specific chunks.
 
@@ -98,10 +98,7 @@ Step 02
 
 After getting the ```UUID``` of the chunk/s that the status need to be updated, ```UUID``` is attached to the request and send to the ballerina backend. Then it gives the status for each pipeline in the release chunk.
 
-e.g :-
-
-when we send specific requests with UUIDs to the ballerina backend. Ballerina backend gives details of CI and CD pipelines of that chunk.
-
+Then UMT backend checks the response of the ballerina service and saves the status in the ```release_chunk_cst_build_status``` table and updates the ```release_chunk_cst_build_status_history``` table.
 
 
 
