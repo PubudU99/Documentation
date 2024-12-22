@@ -18,7 +18,7 @@ Service connections used
   1. aws_connection - For downloading the vanilla products from the aws s3 bucket
   2. wso2_cs - (Github Service Connection) For checkout files for each customer in the CST available customer repositories.
   3. Infrastructure Provisioning Service Connection - (Azure Resource Manager connection) For creating and destroying resources
-        - This service connection has owner permission as the Infrastructure has to be provisioned and user roles should be assigned to some resources.[1]
+        - This service connection has owner permission as the Infrastructure has to be provisioned and user roles should be assigned to some resources.
   4. Push Image to ACR - (Docker Registry Type connection) This Service connection is used to build and push images to the Azure container registry.
   5. SharedConnection - (Azure Resource Manager connection) This connection is used for the connection between two subscriptions namely ```tg-cs-bnym-001``` and ```tg-cs-global-shared-001```
 
