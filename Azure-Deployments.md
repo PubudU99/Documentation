@@ -1,45 +1,78 @@
-Azure cloud is used to provision the required infrastructure for the CST process.
+# CST Process Infrastructure Provisioning on Azure
 
-The tests are planned to be run in a cluster by the Azure DecOps pipeline. Unlike normal pipeline agents, the agent must not be a default agent as the cluster is private and there is no public endpoints for the default agent to connect to the cluster and the discussed architecture was to use Hub and Spoke architecture on this Infrastructures.
+The tests are planned to be run in a cluster by the Azure DevOps pipeline. Unlike normal pipeline agents, the agent must not be a default agent as the cluster is private and there is no public endpoints for the default agent to connect to the cluster and the discussed architecture was to use **Hub and Spoke** architecture on this Infrastructures.
 
-There are two subscription in azure.
+## Azure Subscriptions
+### Shared Subscription (HUB)
+- **Name**: `tg-cs-shared-001`
+- Hosts infrastructure shared across the spokes.
 
-Shared Subscription - ```tg-cs-shared-001``` -> HUB
-Bnymellon subscription - ```tg-cs-bnym-001``` -> SPOKES
-Cagib subscription - ```tg-cs-cagib-001``` -> SPOKES
+### Customer Subscriptions (SPOKES)
+1. **Bnymellon Subscription**: `tg-cs-bnym-001`
+2. **Cagib Subscription**: `tg-cs-cagib-001`
 
-Infrastructures in the hub will be provisioned in the Shared subscription and Infrastructure for spokes will be provisioned in each of the customer's subscription.
+## Hub Infrastructure
+The hub hosts resources shared across multiple spokes, provisioned in the **Shared Subscription**.
 
-Resources that is provisioned in the Hub(Manually)
-1. Resource group for managing the resources
-2. Virtual Network for deploy the VMSS instances in specified subnet.
-3. Virtual Machine Scale Set for the Azure DevOps pipeline agent pool
+### Manually Provisioned Resources in the Hub
+1. **Resource Group**: For managing hub resources.
+2. **Virtual Network (VNet)**: For hosting subnet configurations.
+3. **Virtual Machine Scale Set (VMSS)**: Configured for the Azure DevOps pipeline agent pool.
+
+## Spoke Infrastructure
+The spokes host customer-specific resources, provisioned in individual customer subscriptions using Terraform.
+
+### Terraform Modules
+The WSO2 [terraform-modules](https://github.com/wso2/azure-terraform-modules/tree/main/modules/azurerm/AKS-Generic) are used for automation. These modules simplify the deployment process and ensure consistency across customer subscriptions.
+
+### Planned Infrastructure in the Spokes
+1. **Private AKS (Azure Kubernetes Service) Cluster**:
+   - Enables secure, private access.
+2. **Node Pool Subnet**:
+   - Dedicated subnet for cluster node pools.
+3. **Load Balancer Subnet**:
+   - Supports the load balancer for cluster traffic management.
+4. **Network Security Groups (NSG)**:
+   - Created for both node pool and load balancer subnets.
+5. **NSG Rules**:
+   - Configured to control traffic flow.
+6. **Route Tables**:
+   - Established for network routing.
+7. **Role Assignments**:
+   - Configured for load balancer and node pools to manage IP assignments.
+
+### Subnet Associations
+- NSGs and route tables are associated with the respective subnets to enforce security and routing configurations.
+
+### AKS Cluster Deployment
+The **AKS-Generic Module** is utilized to create the private AKS cluster. This ensures:
+- No public traffic interference.
+- Private access for all associated resources.
+
+## Architectural Diagram
+The architecture follows the Hub and Spoke model for secure, private access to resources. 
+
+![Infrastructure Architecture](https://github.com/user-attachments/assets/0b8cb1ff-848c-4763-9079-be2d8d5a57eb)
+
+As in the picture, The hub and spoke architecture is created.
+### Private Configuration
+- A **Private Fully Qualified Domain Name (FQDN)** is created for the cluster.
+- A **Private DNS Zone** is configured to support internal name resolution.
+### Vnet Peering
+The two Virtual networks in hub and spoke are 
 
 
-Infrastructure is provisioned by using terraform
 
-I have used terraform modules build by the wso2.
-[terraform-modules](https://github.com/wso2/azure-terraform-modules/tree/main/modules/azurerm/AKS-Generic)
 
-Planned Infrastructure that is provisioned by the Terraform.
-1. Private AKS(Azure Kubernetes Service) cluster.
-2. Node pool subnet
-3. Load balancer subnet
-4. Network Security Groups(NSG) for both the subnets
-5. NSG rules for both subnets
-6. Route table
+## Summary
+This deployment approach ensures:
+- Complete isolation of resources in the private cluster.
+- Centralized management via the hub.
+- Simplified deployment using Terraform modules.
+- Secure access using private DNS and NSGs.
 
-Then role assignments are done for the load balancer and the node pool for assigning IPs from the load balancer subnet.
+For more information or assistance, refer to the [terraform-modules documentation](https://github.com/wso2/azure-terraform-modules/tree/main/modules/azurerm/AKS-Generic).
 
-Associations have been created in order to assign the NSGs and route rables to the subnets.
-
-I have used the AKS-Generic module to create the cluster.
-
-Here is the Architectural diagram for the Infrastructure that is provisioned.
-[Image link][docs/images/azure_portal/archi.png]
-
-As we dont want public traffic to be interfere or any public access to the cluster, The AKS cluster is a private cluster. 
-All the created resources are private. As the settings have been configured to have seperate Resource group for the Cluster resources, private fqdn has been created and a private DNS zone has been configured.
 
 
 
