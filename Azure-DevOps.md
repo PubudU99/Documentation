@@ -1,33 +1,42 @@
 # Azure DevOps for the CST process
 
-Ballerina service call the azure pipelines for triggering the CI-CD pipelines for the Customer Specific Tests process.
+### Ballerina Service Integration with Azure Pipelines for CST Process
 
-Azure dev Ops is used for implementing the pipelines for CI-CD parts of the CST process. CI-pipeline is used to build and push the images of the requested products by the Ballerina service.
+#### Overview
+Ballerina service calls Azure pipelines to trigger CI/CD pipelines for the Customer Specific Tests (CST) process. 
+Azure DevOps is utilized for implementing these pipelines, which are categorized into:
 
-pipelines are written in yaml files and main two pipelines are ```CI-Pipeline``` and ```CD-Pipeline```
+- **CI-Pipeline**: Builds and pushes images of the requested products by the Ballerina service.
+- **CD-Pipeline**: Runs the test scenarios in a controlled environment.
 
-Agent Pools used
-  1. Default Azure pipeline agent - Default pipeline agents given by Azure.
-  2. Shred VMSS pipeline agent - This is a self hosted pipeline agent created using a VMSS deployed in the shared connection.
-Service Hooks used
-  1.  CI pipeline status update webhook
-  2.  CD pipeline trigger webhook
-  3.  CD pipeline status update webhook
+Both pipelines are defined using YAML files.
 
-Service connections used
-  1. aws_connection - For downloading the vanilla products from the aws s3 bucket
-  2. wso2_cs - (Github Service Connection) For checkout files for each customer in the CST available customer repositories.
-  3. Infrastructure Provisioning Service Connection - (Azure Resource Manager connection) For creating and destroying resources
-        - This service connection has owner permission as the Infrastructure has to be provisioned and user roles should be assigned to some resources.
-  4. Push Image to ACR - (Docker Registry Type connection) This Service connection is used to build and push images to the Azure container registry.
-  5. SharedConnection - (Azure Resource Manager connection) This connection is used for the connection between two subscriptions namely ```tg-cs-bnym-001``` and ```tg-cs-global-shared-001```
+#### Agent Pools
+1. **Default Azure pipeline agent**: Default pipeline agents provided by Azure.
+2. **Shared VMSS pipeline agent**: A self-hosted pipeline agent created using a Virtual Machine Scale Set (VMSS) deployed in the shared connection.
 
-Secure Files for pipelines
-  1. values.yaml file - For product deployment - (Still this is for only wso2am-3.2.0 version)
-  2. terraform.conf.secret.tfvars - For infrastructure provisioning
+#### Service Hooks
+1. **CI pipeline status update webhook**
+2. **CD pipeline trigger webhook**
+3. **CD pipeline status update webhook**
 
-Teams for the project CST_Project
-  1. CST_Project Team - This is used to notify about the pipeline completion or failures in pipelines.
+#### Service Connections
+1. **aws_connection**: For downloading vanilla products from the AWS S3 bucket.
+2. **wso2_cs (GitHub Service Connection)**: For checking out files for each customer in the CST customer repositories.
+3. **Infrastructure Provisioning Service Connection (Azure Resource Manager connection)**:
+    - Used for creating and destroying resources.
+    - Has owner permission as the infrastructure requires provisioning and user roles need to be assigned to some resources.
+4. **Push Image to ACR (Docker Registry Type connection)**: Used to build and push images to the Azure Container Registry.
+5. **SharedConnection (Azure Resource Manager connection)**: Manages the connection between two subscriptions:
+    - `tg-cs-bnym-001`
+    - `tg-cs-global-shared-001`
+
+#### Secure Files for Pipelines
+1. **values.yaml file**: Used for product deployment (currently limited to `wso2am-3.2.0` version).
+2. **terraform.conf.secret.tfvars**: Used for infrastructure provisioning.
+
+#### Teams
+1. **CST_Project Team**: Notifies about the completion or failure of pipelines.
 
 # Pipelines
 
