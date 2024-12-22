@@ -2,6 +2,7 @@
 
 ## Overview
 The Ballerina API service, hosted on Choreo, is designed to trigger CI/CD pipelines in Azure. The service provides endpoints to manage build processes, retrieve customer data, and handle webhook notifications.
+This service is deplyed in the choreo as **Ballerina Service for Customer Specific Tests** 
 
 ---
 
