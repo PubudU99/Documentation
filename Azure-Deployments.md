@@ -5,7 +5,7 @@ The tests are planned to be run in a cluster by the Azure DevOps pipeline. Unlik
 
 ## Azure Subscriptions
 ### Shared Subscription (HUB)
-- **Name**: `tg-cs-shared-001`
+- **Name**: `tg-cs-global-shared-001`
 - Hosts infrastructure shared across the spokes.
 
 ### Customer Subscriptions (SPOKES)
