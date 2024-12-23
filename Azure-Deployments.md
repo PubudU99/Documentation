@@ -51,7 +51,7 @@ The **AKS-Generic Module** is utilized to create the private AKS cluster. This e
 - Private access for all associated resources.
 
 ## Architectural Diagram
-The architecture follows the Hub and Spoke model for secure, private access to resources. 
+The architecture follows the Hub and Spoke model for the project to have secure, private access to resources.
 
 ![Infrastructure Architecture](https://github.com/user-attachments/assets/0b8cb1ff-848c-4763-9079-be2d8d5a57eb)
 
