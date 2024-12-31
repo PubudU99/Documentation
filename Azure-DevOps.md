@@ -3,8 +3,9 @@
 ### Ballerina Service Integration with Azure Pipelines for CST Process
 
 #### Overview
+
 Ballerina service calls Azure pipelines to trigger CI/CD pipelines for the Customer Specific Tests (CST) process. 
-Azure DevOps is utilized for implementing these pipelines, which are categorized into:
+Azure DevOps is utilized for implementing these pipelines, which are categorized into,
 
 - **CI-Pipeline**: Builds and pushes images of the requested products by the Ballerina service.
 - **CD-Pipeline**: Runs the test scenarios in a controlled environment.
@@ -16,11 +17,12 @@ Both pipelines are defined using YAML files.
 2. **Shared VMSS pipeline agent**: A self-hosted pipeline agent created using a Virtual Machine Scale Set (VMSS) deployed in the shared connection.
 
 #### Service Hooks
-1. **CI pipeline status update webhook**
-2. **CD pipeline trigger webhook**
-3. **CD pipeline status update webhook**
+1. **CI pipeline status update webhook** - This webhook endpoint is used to update the CI pipeline status of a chunk. This is called when the CI pipeline is finished. 
+2. **CD pipeline trigger webhook** - This webhook endpoint is used to trigger the CD pipeline. This is also called after the CI pipeline is finnished.
+3. **CD pipeline status update webhook** - This webhook endpoint is called when the CD pipeline is finished.
 
 #### Service Connections
+
 1. **aws_connection**: For downloading vanilla products from the AWS S3 bucket.
 2. **wso2_cs (GitHub Service Connection)**: For checking out files for each customer in the CST customer repositories.
 3. **Infrastructure Provisioning Service Connection (Azure Resource Manager connection)**:
@@ -32,10 +34,12 @@ Both pipelines are defined using YAML files.
     - `tg-cs-global-shared-001`
 
 #### Secure Files for Pipelines
+
 1. **values.yaml file**: Used for product deployment (currently limited to `wso2am-3.2.0` version).
 2. **terraform.conf.secret.tfvars**: Used for infrastructure provisioning.
 
 #### Teams
+
 1. **CST_Project Team**: Notifies about the completion or failure of pipelines.
 
 # Pipelines
