@@ -14,12 +14,12 @@ Both pipelines are defined using YAML files.
 
 #### Agent Pools
 1. **Default Azure pipeline agent**: Default pipeline agents provided by Azure.
-2. **Shared VMSS pipeline agent**: A self-hosted pipeline agent created using a Virtual Machine Scale Set (VMSS) deployed in the shared connection.
+2. **Shared VMSS pipeline agent**: A self-hosted pipeline agent created using a Virtual Machine Scale Set (VMSS) deployed in the shared subscription (`tg-cs-global-shared-001`)
 
 #### Service Hooks
 1. **CI pipeline status update webhook** - This webhook endpoint is used to update the CI pipeline status of a chunk. This is called when the CI pipeline is finished. 
 2. **CD pipeline trigger webhook** - This webhook endpoint is used to trigger the CD pipeline. This is also called after the CI pipeline is finnished.
-3. **CD pipeline status update webhook** - This webhook endpoint is called when the CD pipeline is finished.
+3. **CD pipeline status update webhook** - This webhook endpoint is used to update the CD pipeline status of a chunk. This webhook endpoint is called when the CD pipeline is finished.
 
 #### Service Connections
 
@@ -57,7 +57,6 @@ Both pipelines are defined using YAML files.
 - **hotfix_pack**: The URL of the hotfix pack.
 
 ## Variables
-- **one**: Initial value.
 - **imageRepository**: The image repository name (e.g., wso2am).
 - **containerRegistry**: The container registry URL (e.g., <registry-name>.azurecr.io).
 - **tag**: The build tag (e.g., $(Build.BuildId)).
@@ -122,7 +121,7 @@ Common hub resource details
 - **sharedVnet**: Shared Vnet name for the private shared resources (e.g., `'vnet-bnymellon-cst-hub-prod-eastus-shared-001'`).
 
 Ingress controller configurations
-- **lbSubnetIP**: LB subnet's IP for the ingress controller (e.g., 10.0.3.9).
+- **lbSubnetIP**: Loadbalancer subnet's IP for the ingress controller (e.g., 10.0.3.9).
 - **ingressControllerNamespace**: Namespace name of the Ingress controller 
 
 ### Resources
